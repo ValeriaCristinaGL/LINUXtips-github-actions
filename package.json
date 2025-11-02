@@ -7,7 +7,9 @@
     "start": "node server.js",
     "build": "echo 'Build completed successfully!'",
     "tests": "jest --coverage",
-    "posttests": "mkdir -p .nyc_output && cp coverage/coverage-final.json .nyc_output/out.json"
+    "posttests": "mkdir -p .nyc_output && cp coverage/coverage-final.json .nyc_output/out.json",
+    "lint": "eslint . --ext .js",
+    "lint:fix": "eslint . --ext .js --fix"
   },
   "keywords": [
     "github-actions",
@@ -28,7 +30,8 @@
   "devDependencies": {
     "jest": "^29.7.0",
     "supertest": "^6.3.4",
-    "nyc": "^17.1.0"
+    "nyc": "^17.1.0",
+    "eslint": "^8.0.0"
   },
   "engines": {
     "node": ">=16.0.0"

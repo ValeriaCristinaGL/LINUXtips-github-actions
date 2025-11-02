@@ -84,6 +84,9 @@ jobs:
       - name: "Instalar dependências"
         run: npm ci
         
+      - name: "Rodar lint"
+        run: npm run lint
+      
       - name: "Build da aplicação"
         run: |
           echo "Iniciando build..."
