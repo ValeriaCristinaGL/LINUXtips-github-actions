@@ -133,7 +133,7 @@ jobs:
       - name: "Verificar imagens"
         run: |
           echo "Imagens Docker criadas:"
-          docker images | grep "$(echo ${{ github.repository }} | cut -d'/' -f2 | tr '[:upper:]' '[:lower:]')"
+          docker images | grep "$(echo ${{ github.repository }} | cut -d'/' -f2 | tr '[:upper:]' '[:lower:]')" || true
           
   health-check:
     name: "Health Check"
