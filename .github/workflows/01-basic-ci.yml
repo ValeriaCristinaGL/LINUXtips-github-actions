@@ -107,18 +107,13 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: "Build da imagem Docker"
+      - name: Build multi-plataforma e push
         run: |
-          REPO_NAME=$(echo "${{ github.repository }}" | tr '[:upper:]' '[:lower:]')
-          IMAGE_NAME="ghcr.io/${REPO_NAME}"
-          IMAGE_TAG="${{ github.sha }}"
-          echo "Construindo imagem: $IMAGE_NAME:$IMAGE_TAG"
-          docker build -t "$IMAGE_NAME:$IMAGE_TAG" .
-          docker build -t "$IMAGE_NAME:latest" .
-          echo "Imagem construída com sucesso!"
-          echo "IMAGE_NAME=$IMAGE_NAME" >> $GITHUB_ENV
-          echo "IMAGE_TAG=$IMAGE_TAG" >> $GITHUB_ENV
-        shell: bash
+          docker buildx create --use
+          docker buildx build --platform linux/amd64,linux/arm64 \
+            -t ghcr.io/${{ github.repository_owner }}/linuxtips-github-actions:latest \
+            -t ghcr.io/${{ github.repository_owner }}/linuxtips-github-actions:${{ github.sha }} \
+            --push .
 
       - name: "Instalar Docker Scout"
         run: |
