@@ -107,7 +107,7 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build multi-plataforma e push
+            - name: Build multi-plataforma e push
         run: |
           docker buildx create --use
           REPO_NAME=$(echo "${{ github.repository_owner }}/${{ github.event.repository.name }}" | tr '[:upper:]' '[:lower:]')
@@ -129,14 +129,6 @@ jobs:
           echo "Executando análise de segurança com Docker Scout..."
           docker scout quickview ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }} || echo "Scout analysis completed with warnings"
           docker scout cves ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }} --exit-code --only-severity critical,high || echo "Vulnerabilities found but continuing"
-
-      - name: "Push da imagem para GHCR"
-        run: |
-          echo "Fazendo push da imagem para o GitHub Container Registry..."
-          docker push ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
-          docker push ${{ env.IMAGE_NAME }}:latest
-          echo "Imagem enviada com sucesso!"
-          echo "Imagem disponível em: https://github.com/${{ github.repository }}/pkgs/container/$(echo ${{ github.repository }} | cut -d'/' -f2 | tr '[:upper:]' '[:lower:]')"
 
       - name: "Verificar imagens"
         run: |
