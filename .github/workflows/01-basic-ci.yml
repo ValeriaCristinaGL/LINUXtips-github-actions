@@ -107,7 +107,7 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-            - name: Build multi-plataforma e push
+      - name: Build multi-plataforma e push
         run: |
           docker buildx create --use
           REPO_NAME=$(echo "${{ github.repository_owner }}/${{ github.event.repository.name }}" | tr '[:upper:]' '[:lower:]')
